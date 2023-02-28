@@ -7,7 +7,6 @@ CREATE TABLE patients (
 
 CREATE TABLE medical_histories (
   id SERIAL,
-  patient_id int NOT NULL,
   addmited_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
   patient_id INT REFERENCES patients(id) NOT NULL,
   status varchar(100) NOT NULL,
@@ -23,20 +22,20 @@ CREATE TABLE invoices (
   PRIMARY KEY(id)
 );
 
+CREATE TABLE treatments(
+  id SERIAL,
+  type VARCHAR(100),
+  name VARCHAR(100),
+  PRIMARY KEY(id)
+);
+
 CREATE TABLE invoice_items(
   id SERIAL,
   unit_price DECIMAL(10,2) NOT NULL,
   quantity INT NOT NULL,
   total_price DECIMAL(10,2),
-  invoice_id REFERENCES invoices(id) NOT NULL,
-  treatment_id REFERENCES treatments(id) NOT NULL,
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE treatments(
-  id SERIAL,
-  type VARCHAR(100),
-  name VARCHAR(100),
+  invoice_id INT REFERENCES invoices(id),
+  treatment_id INT REFERENCES treatments(id),
   PRIMARY KEY(id)
 );
 
